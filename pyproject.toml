@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spectral-reasoner"
+version = "0.1.0"
+description = "Lightweight local evidence-gated QA and controlled generation with spectral risk scoring."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Custom non-commercial source-available license; commercial use requires a paid license"}
+authors = [
+  {name = "Huang Hansong"}
+]
+keywords = [
+  "local-ai",
+  "rag",
+  "evidence-gated",
+  "spectral-reasoning",
+  "question-answering",
+  "controlled-generation",
+  "cmrc2018"
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence"
+]
+dependencies = [
+  "numpy>=1.21",
+  "torch>=2.0"
+]
+
+[project.scripts]
+spectral-reasoner = "spectral_reasoner.server:main"
+spectral-reasoner-batch = "spectral_reasoner.jsonl_batch_infer:main"
+spectral-build-cmrc-kb = "spectral_reasoner.build_cmrc_kb:main"
+
+[project.urls]
+Homepage = "https://github.com/lll178/spectral-reasoner"
+Documentation = "https://github.com/lll178/spectral-reasoner#readme"
+Issues = "https://github.com/lll178/spectral-reasoner/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+spectral_reasoner = ["web/index.html"]

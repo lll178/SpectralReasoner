@@ -1,0 +1,253 @@
+# SpectralReasoner Custom Non-Commercial License
+# Version 1.0
+
+## English Legal Text
+
+Copyright (c) 2026-Present Huang Hansong, All Rights Reserved.
+
+### 1. Grant of License
+
+Subject to all terms of this license, the copyright holder grants you a
+worldwide, non-transferable, non-exclusive, royalty-free limited license to use,
+copy, modify, compile, run, and distribute the Software solely for
+Non-Commercial Use.
+
+Commercial use of the Software is strictly prohibited unless you obtain a
+separate written commercial license signed and issued by the copyright holder.
+
+### 2. Definitions
+
+1. **Software** means all source code, binaries, documentation, models, scripts,
+   web UI files, configuration files, deployment tools, and related assets
+   published under this license within the SpectralReasoner repository or
+   release package.
+2. **Non-Commercial Use** means use without direct or indirect monetary profit,
+   revenue generation, commercial service, paid product embedding, corporate
+   production deployment, paid technical consulting, paid technical training, or
+   commercial data processing. Examples include personal learning, academic
+   research, non-profit experiments, and free public demonstrations.
+3. **Commercial Use** means any use related to business operation, revenue
+   generation, paid services, commercial product integration, enterprise
+   production deployment, internal commercial workflows, paid technical support,
+   paid training, commercial consulting, customer-billed data processing, or use
+   as a material component of a commercial product or service.
+
+### 3. Allowed Uses
+
+Subject to this license, you may:
+
+1. use, copy, compile, and run the Software for Non-Commercial Use;
+2. modify the Software for Non-Commercial Use;
+3. distribute unmodified or modified copies solely for Non-Commercial Use,
+   provided that this license and all copyright notices remain intact;
+4. publish non-commercial research results, benchmarks, blog posts, or
+   demonstrations based on the Software with proper attribution.
+
+### 4. Restrictions
+
+1. You must retain the copyright notice and this license in all copies and
+   modified versions of the Software.
+2. You may not sublicense, sell, rent, lease, host, embed, or otherwise monetize
+   the Software or derivative works without a written commercial license.
+3. You may not use the Software in any paid product, hosted service, enterprise
+   production system, internal commercial workflow, commercial model-training
+   pipeline, or paid customer delivery without a written commercial license.
+4. You may not reverse engineer, decompile, disassemble, circumvent license
+   restrictions, or remove commercial-use restrictions for commercial purposes.
+5. You may not remove, obscure, or alter copyright notices, license notices,
+   commercial-use restrictions, attribution notices, or proprietary notices.
+6. You may not claim ownership of the original Software, its core spectral
+   reasoning implementation, or the SpectralReasoner project identity.
+
+### 5. Derivative Works and Source Disclosure
+
+Any derivative work, modified version, adaptation, extension, integration,
+translation, fork, plugin, wrapper, service-side modification, hosted deployment,
+or other work based on the Software must remain subject to this license for
+Non-Commercial Use unless a separate written commercial license is obtained from
+the copyright holder.
+
+If you distribute, publish, provide network access to, host, deploy for public
+or internal users, or otherwise make available any derivative work or modified
+version of the Software, you must make the complete corresponding source code of
+that derivative work or modified version publicly available under this same
+license, including all modifications necessary to build, run, and reproduce the
+deployed functionality.
+
+You may not distribute or provide access to derivative works under a closed
+source, proprietary, or more restrictive license unless you have obtained a
+separate written commercial license from the copyright holder.
+
+This source disclosure requirement applies regardless of whether the derivative
+work is distributed as source code, binary, model bundle, hosted service, API,
+web service, internal tool, or other software delivery form, to the maximum
+extent permitted by applicable law.
+
+### 6. Contributions and Copyright Ownership
+
+Unless a separate written contributor agreement states otherwise, any
+contribution submitted to the SpectralReasoner project is provided under this
+license and may also be used by the copyright holder under separate commercial
+licenses.
+
+By submitting a contribution, you represent that:
+
+1. you have the legal right to submit the contribution;
+2. the contribution does not knowingly include code copied from projects whose
+   licenses would conflict with this license or with commercial relicensing;
+3. you will not submit code copied from GPL, AGPL, LGPL, or other strong
+   copyleft projects without prior written approval from the copyright holder.
+
+The copyright holder reserves all rights not expressly granted by this license,
+including the right to issue separate commercial licenses.
+
+### 7. Third-Party Components
+
+Third-party dependencies, datasets, models, and external libraries are licensed
+by their respective owners. This license does not grant rights to third-party
+materials beyond the rights provided by their own licenses.
+
+You are responsible for complying with all applicable third-party licenses,
+dataset terms, model terms, export controls, and local laws when using or
+redistributing the Software.
+
+### 8. Commercial Licensing
+
+To use the Software commercially, you must obtain a separate written commercial
+license from the copyright holder.
+
+Commercial licenses may include production deployment rights, closed-source
+embedding rights, hosted service rights, enterprise support, custom training or
+integration services, priority updates, warranty, indemnity, SLA, or other
+negotiated legal terms.
+
+### 9. Disclaimer of Warranty
+
+THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE, NONINFRINGEMENT, SECURITY, ACCURACY, RELIABILITY, OR
+AVAILABILITY.
+
+THE COPYRIGHT HOLDER DOES NOT WARRANT THAT THE SOFTWARE WILL BE ERROR-FREE,
+SECURE, UNINTERRUPTED, FIT FOR PRODUCTION USE, OR SUITABLE FOR ANY PARTICULAR
+LEGAL, MEDICAL, FINANCIAL, SAFETY-CRITICAL, OR COMMERCIAL PURPOSE.
+
+### 10. Limitation of Liability
+
+IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, LOSS OF
+DATA, LOST PROFITS, BUSINESS INTERRUPTION, SECURITY INCIDENT, MODEL ERROR,
+INCORRECT OUTPUT, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT,
+COPYRIGHT, NEGLIGENCE, STRICT LIABILITY, OR OTHERWISE, ARISING FROM, OUT OF, OR
+IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+### 11. Copyright Infringement and Enforcement
+
+Any unauthorized commercial use shall constitute copyright infringement under
+applicable copyright laws. The copyright holder reserves the right to demand
+immediate cessation of use, claim economic compensation, seek injunctive relief,
+and pursue corresponding legal liabilities to the fullest extent permitted by
+law.
+
+Violation of this license automatically terminates all rights granted to you
+under this license. Upon termination, you must immediately stop using,
+distributing, hosting, or modifying the Software and delete all unauthorized
+copies, unless otherwise required by law.
+
+### 12. Governing Text
+
+This license is provided in English and Chinese. In case of conflict,
+inconsistency, or ambiguity between the English and Chinese texts, the English
+text controls.
+
+================================================================================
+
+## 中文法律文本
+
+# SpectralReasoner 自定义非商用许可证
+# 1.0 版本
+
+版权所有 (c) 2026-至今 Huang Hansong，保留全部法定权利。
+
+### 1. 许可授予
+
+在遵守本许可证全部条款的前提下，版权方授予你一份全球范围、不可转让、非独占、免费的有限许可：仅可为非商业用途使用、复制、修改、编译、运行和分发本软件。
+
+若需将本软件用于任何商业场景，必须取得版权方签署并发放的单独书面商业授权。未经授权的商业使用一律禁止。
+
+### 2. 定义
+
+1. **软件**：指 SpectralReasoner 仓库或发布包中基于本许可证发布的全部源代码、二进制文件、文档、模型、脚本、网页界面、配置文件、部署工具及相关附属资源。
+2. **非商业用途**：指不存在直接或间接盈利、营收、商业服务、付费产品嵌入、企业生产部署、付费技术咨询、付费技术培训或商业数据处理的使用行为。例如个人学习、学术研究、非营利实验和免费公开演示。
+3. **商业用途**：指一切与经营、创收、付费服务、商业产品集成、企业生产部署、内部商业工作流、付费技术支持、付费培训、商业咨询、面向客户收费的数据处理，或作为商业产品或服务重要组成部分相关的使用行为。
+
+### 3. 允许行为
+
+在遵守本许可证的前提下，你可以：
+
+1. 为非商业用途使用、复制、编译和运行本软件；
+2. 为非商业用途修改本软件；
+3. 仅为非商业用途分发未修改或已修改版本，但必须完整保留本许可证和全部版权声明；
+4. 在适当署名的前提下，发布基于本软件的非商业研究结果、评测、博客文章或演示。
+
+### 4. 使用限制
+
+1. 复制或修改本软件时，必须保留版权声明和本许可证。
+2. 未取得书面商业授权前，不得转授权、销售、出租、租借、托管、嵌入或以其他方式将本软件或其衍生作品货币化。
+3. 未取得书面商业授权前，不得将本软件用于任何付费产品、托管服务、企业生产系统、内部商业工作流、商业模型训练流水线或面向付费客户的交付。
+4. 不得以商业规避为目的对本软件进行逆向工程、反编译、反汇编、绕过许可限制或移除商业使用限制。
+5. 不得移除、遮挡或修改版权声明、许可证声明、商业使用限制、署名声明或专有权利声明。
+6. 不得声称拥有原始软件、核心谱推理实现或 SpectralReasoner 项目标识的所有权。
+
+### 5. 衍生作品与源代码公开义务
+
+任何基于本软件形成的衍生作品、修改版本、改编版本、扩展、集成、翻译、fork、插件、封装、服务端修改、托管部署或其他作品，在未取得版权方单独书面商业授权前，必须在非商业用途范围内继续受本许可证约束。
+
+如果你分发、发布、提供网络访问、托管、面向公开用户或内部用户部署，或以其他方式提供任何本软件的衍生作品或修改版本，你必须按照本许可证公开该衍生作品或修改版本的完整对应源代码，包括构建、运行和复现所部署功能所必需的全部修改。
+
+未经版权方单独书面商业授权，不得以闭源、专有或更严格限制的许可证分发或提供本软件的衍生作品。
+
+在适用法律允许的最大范围内，无论衍生作品以源代码、二进制文件、模型包、托管服务、API、网页服务、内部工具或其他软件交付形式提供，均适用上述源代码公开义务。
+
+### 6. 贡献与版权归属
+
+除非另有书面贡献者协议，提交到 SpectralReasoner 项目的任何贡献均按本许可证提供，并且版权方也可以在单独商业许可证下使用该贡献。
+
+提交贡献即表示你声明：
+
+1. 你拥有提交该贡献的合法权利；
+2. 该贡献不 knowingly 包含会与本许可证或商业再授权冲突的第三方代码；
+3. 未经版权方事先书面批准，你不会提交从 GPL、AGPL、LGPL 或其他强 copyleft 项目复制的代码。
+
+版权方保留本许可证未明确授予的一切权利，包括签发单独商业许可证的权利。
+
+### 7. 第三方组件
+
+第三方依赖、数据集、模型和外部库由其各自权利人授权。本许可证不会授予超出第三方材料自身许可证范围以外的任何权利。
+
+使用或再分发本软件时，你有责任遵守所有适用的第三方许可证、数据集条款、模型条款、出口管制和当地法律。
+
+### 8. 商业授权
+
+如需商业使用本软件，必须从版权方取得单独签署的书面商业授权。
+
+商业授权可根据协议包含生产部署权、闭源嵌入权、托管服务权、企业支持、定制训练或集成服务、优先更新、质保、免责、SLA 或其他协商法律条款。
+
+### 9. 免责声明
+
+本软件按“现状”提供，不提供任何明示或暗示担保，包括但不限于适销性、特定用途适配性、非侵权、安全性、准确性、可靠性或可用性担保。
+
+版权方不保证本软件无错误、安全、不中断、适合生产使用，或适用于任何特定法律、医疗、金融、安全关键或商业目的。
+
+### 10. 有限责任
+
+在法律允许的最大范围内，版权方不对任何索赔、损害、数据丢失、利润损失、业务中断、安全事件、模型错误、错误输出或其他责任承担赔偿责任，无论该责任基于合同、侵权、著作权、过失、严格责任或其他法律理论，也无论其是否因本软件或使用本软件而产生。
+
+### 11. 侵权追责与执行
+
+一切未经授权的商业使用均构成适用著作权法律下的著作权侵权。版权方有权要求立即停止使用、追索经济赔偿、申请禁令救济，并在法律允许的最大范围内追究相关法律责任。
+
+违反本许可证将自动终止本许可证授予你的一切权利。终止后，你必须立即停止使用、分发、托管或修改本软件，并删除所有未经授权的副本，除非法律另有要求。
+
+### 12. 准据文本
+
+本许可证以英文和中文提供。如中英文文本之间存在冲突、不一致或歧义，以英文文本为准。

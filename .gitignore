@@ -1,0 +1,29 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# Local data, generated artifacts, and model runs
+data/
+runs/
+*.pt
+*.pth
+*.onnx
+*.bin
+
+# Release bundles
+dist/
+release/
+spectral_reasoner_release/
+
+# Logs
+*.log
+logs/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
