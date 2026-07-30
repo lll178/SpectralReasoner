@@ -40,6 +40,8 @@ pip install -r requirements.txt
 - `--bundle`：训练或转换得到的 SpectralReasoner 部署 bundle，通常包含 `model.pt`、`vocab.json`、`lm_config.json`、`reasoner_config.json`。
 - `--kb`：可选 JSONL 本地知识库。每行一个 JSON 对象，建议包含 `text` 字段。
 
+注意：CMRC2018 生成的 KB 主要用于阅读理解、证据恢复和工程测试，不是干净的通用中文常识库。真实部署时应换成你自己的领域 KB，并保证文档来源、切分方式和问题分布与业务场景一致。
+
 ## 启动服务
 
 ```powershell
@@ -209,6 +211,8 @@ Non-commercial source-available license + paid commercial license
 
 SpectralReasoner 当前是工程原型。它最适合证据支持型问答和受控生成，不是无限制开放聊天大模型。企业生产部署仍需要鉴权、日志、安全审计、监控和更大规模评测。
 
+CMRC2018 KB 是测试知识库，不应被当成默认通用知识库。真实部署需要接入干净、可控、可授权的领域知识库。
+
 ---
 
 <a id="english"></a>
@@ -252,6 +256,12 @@ The release package is clean and does not bundle models or data. You need to pro
 
 - `--bundle`: an external SpectralReasoner deployment bundle containing files such as `model.pt`, `vocab.json`, `lm_config.json`, and `reasoner_config.json`.
 - `--kb`: an optional external JSONL knowledge base. Each row should contain a `text` field.
+
+Note: a KB generated from CMRC2018 is mainly for reading-comprehension,
+evidence-recovery, and engineering tests. It is not a clean general-purpose
+Chinese commonsense knowledge base. Real deployments should use a domain KB
+whose source, chunking strategy, and question distribution match the target
+workflow.
 
 ## Run
 
@@ -375,3 +385,9 @@ Non-commercial source-available license + paid commercial license
 Commercial use requires a separate written commercial license from Huang Hansong. Unless separately licensed, derivative works, forks, wrappers, plugins, integrations, service-side modifications, and hosted deployments must remain under this license and disclose complete corresponding source code.
 
 See `LICENSE`, `COMMERCIAL_LICENSE.md`, and `THIRD_PARTY_NOTICES.md`.
+
+## Boundary
+
+A CMRC2018-derived KB is a test KB, not a default general knowledge base. Real
+deployments should attach a clean, controlled, and properly licensed domain
+knowledge base.
