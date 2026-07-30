@@ -147,6 +147,10 @@ class SpectralReasonerService:
     def _is_clean_retrieval_span(text: str) -> bool:
         if not text:
             return False
+        if re.match(r"^(zh|en|ja|ko|fr|de|es|ru)([-_][a-z0-9]+)?\s*[:：]", text, flags=re.IGNORECASE):
+            return False
+        if re.search(r"\bzh[-_](hans|hant|cn|tw|hk|mo|sg)\s*[:：]", text, flags=re.IGNORECASE):
+            return False
         if text[0] in "」』”’》）)]】、，。；：！？!?;:,.":
             return False
         if re.match(r"^[\"'“‘]+[”\"'“‘]+", text):
@@ -159,7 +163,18 @@ class SpectralReasonerService:
         quote_count = sum(text.count(ch) for ch in "\"'“”‘’「」『』")
         if quote_count >= 5 and len(text) < 80:
             return False
+        if re.fullmatch(r"[\w\s:：;；,，.。/-]{2,30}", text) and re.search(r"[:：;；]", text):
+            return False
         return True
+
+    @classmethod
+    def _clean_candidate_rows(cls, rows: list[dict[str, float | str]]) -> list[dict[str, float | str]]:
+        clean = []
+        for row in rows:
+            answer = cls._normalize_span(str(row.get("answer", "")))
+            if cls._is_clean_retrieval_span(answer):
+                clean.append(row)
+        return clean
 
     @staticmethod
     def _split_doc_spans(text: str) -> list[str]:
@@ -295,14 +310,26 @@ class SpectralReasonerService:
             recovery_actions=recovery_actions,
         )
         response = self.handle(reasoner_request)
+        candidates_out = self._clean_candidate_rows(response.candidates)
+        answer = response.answer
+        refused = response.refused
+        risk = response.risk
+        confidence = response.confidence
+        evidence = response.supporting_evidence
+        if answer is not None and not self._is_clean_retrieval_span(str(answer)):
+            answer = None
+            refused = True
+            risk = max(1.0, risk)
+            confidence = 0.0
+            evidence = []
         return ChatResponse(
-            answer=response.answer,
-            refused=response.refused,
-            risk=response.risk,
-            confidence=response.confidence,
-            evidence=response.supporting_evidence,
+            answer=answer,
+            refused=refused,
+            risk=risk,
+            confidence=confidence,
+            evidence=evidence,
             route=response.route,
-            candidates=response.candidates,
+            candidates=candidates_out,
             spectral_trace=response.spectral_trace,
             recovery_trace=response.recovery_trace or [],
             prompt=prompt,
@@ -393,6 +420,7 @@ class SpectralReasonerService:
         trace = dict(response.spectral_trace)
         trace["generated_candidate_count"] = float(len(generated))
         trace["doc_span_count"] = float(len(doc_spans))
+        candidates_out = self._clean_candidate_rows(response.candidates)
         return ChatResponse(
             answer=response.answer,
             refused=response.refused,
@@ -400,7 +428,7 @@ class SpectralReasonerService:
             confidence=response.confidence,
             evidence=response.supporting_evidence,
             route="generate_chat_" + response.route,
-            candidates=response.candidates,
+            candidates=candidates_out,
             spectral_trace=trace,
             recovery_trace=response.recovery_trace or [],
             prompt=chat_prompt,
