@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 
-STOP_CHARS = set("的是了和与及或在为把被对从到一个一种以及这里那里什么哪里哪些怎样如何吗呢吧")
+STOP_CHARS = set("的是了和与及或在为把被对从到一个一种以及这里那里什么哪里哪些怎样如何吗呢啊吧之其")
 
 
 @dataclass

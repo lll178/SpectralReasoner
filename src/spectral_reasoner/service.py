@@ -136,6 +136,47 @@ class SpectralReasonerService:
             return spans
         return [cleaned[:220]]
 
+    @staticmethod
+    def _normalize_span(text: str) -> str:
+        text = re.sub(r"\s+", " ", text).strip()
+        text = text.replace("\ufffd", "")
+        text = re.sub(r"[\ue000-\uf8ff]", "", text)
+        return text.strip()
+
+    @staticmethod
+    def _is_clean_retrieval_span(text: str) -> bool:
+        if not text:
+            return False
+        if text[0] in "」』”’》）)]】、，。；：！？!?;:,.":
+            return False
+        if re.match(r"^[\"'“‘]+[”\"'“‘]+", text):
+            return False
+        if len(re.findall(r"[A-Za-z0-9\u4e00-\u9fff]", text)) < 6:
+            return False
+        punct_ratio = len(re.findall(r"[^\w\s\u4e00-\u9fff]", text)) / max(len(text), 1)
+        if punct_ratio > 0.35:
+            return False
+        quote_count = sum(text.count(ch) for ch in "\"'“”‘’「」『』")
+        if quote_count >= 5 and len(text) < 80:
+            return False
+        return True
+
+    @staticmethod
+    def _split_doc_spans(text: str) -> list[str]:
+        cleaned = re.sub(r"\s+", " ", text).strip()
+        if not cleaned:
+            return []
+        parts = re.split(r"(?<=[。！？；!?;.!])\s*", cleaned)
+        spans = []
+        for part in parts:
+            span = SpectralReasonerService._normalize_span(part)
+            if 8 <= len(span) <= 220 and SpectralReasonerService._is_clean_retrieval_span(span):
+                spans.append(span)
+        if spans:
+            return spans
+        fallback = SpectralReasonerService._normalize_span(cleaned[:220])
+        return [fallback] if fallback and SpectralReasonerService._is_clean_retrieval_span(fallback) else []
+
     def _rank_doc_spans(self, question: str, docs: list[str], limit: int) -> list[dict[str, Any]]:
         rows = []
         for doc_index, doc in enumerate(docs):
