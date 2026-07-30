@@ -274,6 +274,22 @@ class SpectralReasonerService:
         generated = self._generate_candidates(prompt, request)
         ranked_docs = self._rank_doc_spans(question, request.docs or [], max(1, min(8, request.generated_candidates)))
         doc_spans = [row["span"] for row in ranked_docs]
+        if not doc_spans:
+            trace = self.reasoner.spectral_trace([question or "empty"], "unknown")
+            trace["generate_chat_no_evidence"] = 1.0
+            trace["generated_candidate_count"] = float(len(generated))
+            return ChatResponse(
+                answer=None,
+                refused=True,
+                risk=1.0,
+                confidence=0.0,
+                evidence=[],
+                route="refused_no_evidence",
+                candidates=[],
+                spectral_trace=trace,
+                recovery_trace=[],
+                prompt=chat_prompt,
+            )
         if doc_spans:
             generated = [candidate for candidate in generated if any(candidate in span for span in doc_spans) or candidate in doc_spans]
         for span in doc_spans[:4]:
