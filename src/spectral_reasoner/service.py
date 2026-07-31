@@ -16,9 +16,12 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
+from .answer_compression import AnswerCompressor
 from .osu_memory import OSUSpectralMemory
 from .reasoner import EvidenceCandidate, ReasonerConfig, SpectralReasoner
 from .active_agent import ActiveAgentConfig, ActiveSpectralAgent, EvidenceAction
+from .semantic_logic import SemanticLogicProbe
+from .text_quality import TextCleaner
 
 
 @dataclass
@@ -113,6 +116,7 @@ class SpectralReasonerService:
     ) -> None:
         self.reasoner = SpectralReasoner(torch, model, dataset, lm_cfg, device, memory=memory, cfg=cfg or ReasonerConfig())
         self.recovery_cfg = recovery_cfg or HybridRecoveryConfig()
+        self.logic_probe = SemanticLogicProbe()
 
     @staticmethod
     def _chat_text(messages: list[ChatMessage]) -> str:
@@ -171,8 +175,8 @@ class SpectralReasonerService:
     def _clean_candidate_rows(cls, rows: list[dict[str, float | str]]) -> list[dict[str, float | str]]:
         clean = []
         for row in rows:
-            answer = cls._normalize_span(str(row.get("answer", "")))
-            if cls._is_clean_retrieval_span(answer):
+            answer = TextCleaner.normalize(str(row.get("answer", "")))
+            if TextCleaner.is_answer_candidate(answer):
                 clean.append(row)
         return clean
 
@@ -194,14 +198,26 @@ class SpectralReasonerService:
 
     def _rank_doc_spans(self, question: str, docs: list[str], limit: int) -> list[dict[str, Any]]:
         rows = []
+        q_units = self.reasoner._content_units(question)
         for doc_index, doc in enumerate(docs):
-            for span_index, span in enumerate(self._split_doc_spans(doc)):
+            for span_index, clean in enumerate(TextCleaner.split_spans(doc)):
+                span = clean.text
                 score = self.reasoner.evidence_support_score(question, span, [span])
                 if score <= 0.0:
-                    score = len(self.reasoner._content_units(question) & self.reasoner._content_units(span)) / max(
-                        len(self.reasoner._content_units(question)), 1
-                    )
-                rows.append({"span": span, "score": float(score), "doc_index": doc_index, "span_index": span_index})
+                    score = len(q_units & self.reasoner._content_units(span)) / max(len(q_units), 1)
+                score = 0.85 * score + 0.15 * clean.quality
+                if score < 0.08:
+                    continue
+                rows.append(
+                    {
+                        "span": span,
+                        "score": float(score),
+                        "quality": float(clean.quality),
+                        "noise_type": clean.noise_type,
+                        "doc_index": doc_index,
+                        "span_index": span_index,
+                    }
+                )
         rows.sort(key=lambda row: (row["score"], len(row["span"])), reverse=True)
         unique = []
         seen = set()
@@ -316,12 +332,23 @@ class SpectralReasonerService:
         risk = response.risk
         confidence = response.confidence
         evidence = response.supporting_evidence
-        if answer is not None and not self._is_clean_retrieval_span(str(answer)):
+        trace = dict(response.spectral_trace)
+        if answer is not None and not TextCleaner.is_answer_candidate(str(answer)):
             answer = None
             refused = True
             risk = max(1.0, risk)
             confidence = 0.0
             evidence = []
+        elif answer is not None and evidence:
+            compressed = AnswerCompressor.compress(question, evidence[0])
+            logic = self.logic_probe.trace(question, compressed.answer)
+            answer = compressed.answer
+            evidence = [compressed.evidence]
+            risk = float(max(risk, logic.logic_risk * 0.25))
+            confidence = float(max(0.0, min(1.0, confidence * (0.75 + 0.25 * compressed.compression_score))))
+            trace["answer_compression_score"] = float(compressed.compression_score)
+            trace["semantic_distance"] = float(logic.semantic_distance)
+            trace["logic_risk"] = float(logic.logic_risk)
         return ChatResponse(
             answer=answer,
             refused=refused,
@@ -330,7 +357,7 @@ class SpectralReasonerService:
             evidence=evidence,
             route=response.route,
             candidates=candidates_out,
-            spectral_trace=response.spectral_trace,
+            spectral_trace=trace,
             recovery_trace=response.recovery_trace or [],
             prompt=prompt,
         )
@@ -342,22 +369,6 @@ class SpectralReasonerService:
         generated = self._generate_candidates(prompt, request)
         ranked_docs = self._rank_doc_spans(question, request.docs or [], max(1, min(8, request.generated_candidates)))
         doc_spans = [row["span"] for row in ranked_docs]
-        if not doc_spans:
-            trace = self.reasoner.spectral_trace([question or "empty"], "unknown")
-            trace["generate_chat_no_evidence"] = 1.0
-            trace["generated_candidate_count"] = float(len(generated))
-            return ChatResponse(
-                answer=None,
-                refused=True,
-                risk=1.0,
-                confidence=0.0,
-                evidence=[],
-                route="refused_no_evidence",
-                candidates=[],
-                spectral_trace=trace,
-                recovery_trace=[],
-                prompt=chat_prompt,
-            )
         if doc_spans:
             generated = [candidate for candidate in generated if any(candidate in span for span in doc_spans) or candidate in doc_spans]
         for span in doc_spans[:4]:

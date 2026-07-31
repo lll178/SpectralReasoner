@@ -8,6 +8,8 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+from .text_quality import TextCleaner
+
 
 STOP_CHARS = set("的是了和与及或在为把被对从到一个一种以及这里那里什么哪里哪些怎样如何吗呢啊吧之其")
 
@@ -44,11 +46,14 @@ class LocalKnowledgeBase:
                 if not line.strip():
                     continue
                 item = json.loads(line)
+                text = TextCleaner.normalize(str(item.get("text", "")))
+                if not TextCleaner.is_answer_candidate(text, min_quality=0.20):
+                    continue
                 rows.append(
                     KbRow(
                         id=str(item.get("id", len(rows))),
-                        title=str(item.get("title", "")),
-                        text=str(item.get("text", "")),
+                        title=TextCleaner.normalize(str(item.get("title", ""))),
+                        text=text,
                     )
                 )
         return cls(rows)
@@ -66,13 +71,14 @@ class LocalKnowledgeBase:
             jaccard = len(overlap) / max(len(q | units), 1)
             coverage = len(overlap) / max(len(q), 1)
             compact = 1.0 / math.sqrt(max(len(row.text), 1))
-            score = 2.0 * coverage + 1.5 * jaccard + title_bonus + compact
+            quality = TextCleaner.score(row.text).quality
+            score = 2.0 * coverage + 1.5 * jaccard + title_bonus + compact + 0.25 * quality
             ranked.append((score, idx, row))
         ranked.sort(key=lambda item: (item[0], -item[1]), reverse=True)
         docs = []
         seen = set()
         for _, _, row in ranked:
-            if row.text in seen:
+            if row.text in seen or not TextCleaner.is_answer_candidate(row.text, min_quality=0.35):
                 continue
             docs.append(row.text)
             seen.add(row.text)

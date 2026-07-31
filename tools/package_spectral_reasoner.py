@@ -32,6 +32,7 @@ DOC_FILES = [
     "docs/SpectralReasoner_User_Manual_ZH.md",
     "docs/SpectralReasoner_User_Manual_EN.md",
     "docs/OPEN_SOURCE_RELEASE_CHECKLIST.md",
+    "docs/V0_2_ROADMAP.md",
 ]
 
 TOOL_FILES = [
